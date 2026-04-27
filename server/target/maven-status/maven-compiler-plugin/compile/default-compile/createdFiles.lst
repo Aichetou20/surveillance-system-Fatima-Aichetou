@@ -1,0 +1,3 @@
+com\surveillance\server\UdpReceiver.class
+com\surveillance\server\MainServer.class
+com\surveillance\server\DatabaseManager.class
