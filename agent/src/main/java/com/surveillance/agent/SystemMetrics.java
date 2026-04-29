@@ -1,6 +1,7 @@
 package com.surveillance.agent;
 
 import com.google.gson.Gson;
+
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
@@ -14,7 +15,7 @@ public class SystemMetrics {
     private double diskUsage;
     private long timestamp;
 
-    // Collecte toutes les métriques de la machine
+    // Collecte toutes les metriques de la machine
     public static SystemMetrics collect(String agentId) {
         SystemInfo si = new SystemInfo();
         SystemMetrics metrics = new SystemMetrics();

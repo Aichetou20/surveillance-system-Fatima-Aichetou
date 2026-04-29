@@ -1,9 +1,9 @@
 package com.surveillance.agent;
 
+import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -47,7 +47,7 @@ public class AgentSender {
                     " | RAM: " + 
                     String.format("%.1f", metrics.getRamUsage()) + "%");
 
-                // Thread 2 : vérifie les seuils et envoie alerte TCP si besoin
+                // Thread 2 : verifie les seuils et envoie alerte TCP si besoin
                 if (metrics.getCpuUsage() > CPU_SEUIL || 
                     metrics.getRamUsage() > RAM_SEUIL) {
                     envoyerAlerteTCP("ALERTE " + AGENT_ID + 

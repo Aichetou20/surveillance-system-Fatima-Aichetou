@@ -1,3 +1,5 @@
+com\surveillance\server\rmi\MonitoringService.class
 com\surveillance\server\UdpReceiver.class
 com\surveillance\server\MainServer.class
 com\surveillance\server\DatabaseManager.class
+com\surveillance\server\rmi\MonitoringServiceImpl.class
