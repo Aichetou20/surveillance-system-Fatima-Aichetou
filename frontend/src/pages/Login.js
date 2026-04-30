@@ -27,18 +27,20 @@ export default function Login({ onLogin }) {
 
   return (
     <div style={{
-      minHeight: '100vh', background: '#0f172a',
+      minHeight: '100vh', background: '#f5f3ff',
       display: 'flex', alignItems: 'center',
       justifyContent: 'center', fontFamily: 'sans-serif'
     }}>
       <div style={{
-        background: '#1e293b', borderRadius: 16,
+        background: '#ffffff', borderRadius: 16,
         padding: '40px', width: 360,
-        boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
+        boxShadow: '0 25px 50px rgba(109,40,217,0.15)',
+        border: '1px solid #ddd6fe'
       }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h1 style={{ color: '#60a5fa', margin: 0, fontSize: 22 }}>
+          <h1 style={{ color: '#7c3aed', margin: 0, fontSize: 24,
+                       fontWeight: 'bold' }}>
             Surveillance
           </h1>
           <p style={{ color: '#94a3b8', fontSize: 13, margin: '6px 0 0' }}>
@@ -48,28 +50,31 @@ export default function Login({ onLogin }) {
 
         {/* Champ username */}
         <div style={{ marginBottom: 16 }}>
-          <label style={{ color: '#94a3b8', fontSize: 12,
-                          display: 'block', marginBottom: 6 }}>
-             Nom d'utilisateur
+          <label style={{ color: '#6d28d9', fontSize: 12,
+                          display: 'block', marginBottom: 6,
+                          fontWeight: 'bold' }}>
+            Nom d'utilisateur
           </label>
           <input
             type="text"
             value={username}
             onChange={e => setUsername(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleLogin()}
-            placeholder="admin1 ou admin2"
+            placeholder="fatima ou aichetou"
             style={{
               width: '100%', padding: '10px 12px', borderRadius: 8,
-              border: '1px solid #334155', background: '#0f172a',
-              color: '#f1f5f9', fontSize: 14, boxSizing: 'border-box'
+              border: '1px solid #ddd6fe', background: '#faf5ff',
+              color: '#1e293b', fontSize: 14, boxSizing: 'border-box',
+              outline: 'none'
             }}
           />
         </div>
 
         {/* Champ password */}
         <div style={{ marginBottom: 20 }}>
-          <label style={{ color: '#94a3b8', fontSize: 12,
-                          display: 'block', marginBottom: 6 }}>
+          <label style={{ color: '#6d28d9', fontSize: 12,
+                          display: 'block', marginBottom: 6,
+                          fontWeight: 'bold' }}>
             Mot de passe
           </label>
           <input
@@ -80,8 +85,9 @@ export default function Login({ onLogin }) {
             placeholder="••••••••"
             style={{
               width: '100%', padding: '10px 12px', borderRadius: 8,
-              border: '1px solid #334155', background: '#0f172a',
-              color: '#f1f5f9', fontSize: 14, boxSizing: 'border-box'
+              border: '1px solid #ddd6fe', background: '#faf5ff',
+              color: '#1e293b', fontSize: 14, boxSizing: 'border-box',
+              outline: 'none'
             }}
           />
         </div>
@@ -89,11 +95,12 @@ export default function Login({ onLogin }) {
         {/* Erreur */}
         {error && (
           <div style={{
-            background: '#450a0a', color: '#fca5a5',
+            background: '#fee2e2', color: '#dc2626',
+            border: '1px solid #fecaca',
             padding: '8px 12px', borderRadius: 8,
             fontSize: 13, marginBottom: 16, textAlign: 'center'
           }}>
-             {error}
+            {error}
           </div>
         )}
 
@@ -101,25 +108,29 @@ export default function Login({ onLogin }) {
         <button onClick={handleLogin} disabled={loading}
           style={{
             width: '100%', padding: '12px', borderRadius: 8,
-            border: 'none', background: loading ? '#334155' : '#3b82f6',
+            border: 'none',
+            background: loading ? '#ddd6fe' : '#7c3aed',
             color: '#fff', fontSize: 15, fontWeight: 'bold',
-            cursor: loading ? 'not-allowed' : 'pointer'
+            cursor: loading ? 'not-allowed' : 'pointer',
+            boxShadow: loading ? 'none' : '0 4px 12px rgba(124,58,237,0.3)'
           }}>
-          {loading ? 'Connexion...' : ' Se connecter'}
+          {loading ? 'Connexion...' : 'Se connecter'}
         </button>
 
         {/* Comptes disponibles */}
         <div style={{
-          marginTop: 24, background: '#0f172a',
-          borderRadius: 8, padding: 12
+          marginTop: 24, background: '#faf5ff',
+          borderRadius: 8, padding: 12,
+          border: '1px solid #ddd6fe'
         }}>
-          <div style={{ color: '#64748b', fontSize: 11,
-                        marginBottom: 8, textAlign: 'center' }}>
-             Cliquez sur un compte pour remplir automatiquement
+          <div style={{ color: '#7c3aed', fontSize: 11,
+                        marginBottom: 8, textAlign: 'center',
+                        fontWeight: 'bold' }}>
+            Cliquez sur un compte pour remplir automatiquement
           </div>
           {[
-            { user: 'fatima',  pass: 'fatima123',  role: ' admin1',   color: '#7c3aed' },
-            { user: 'aichetou', pass: 'aichetou123', role: ' admin2',  color: '#0891b2' },
+            { user: 'fatima',   pass: 'fatima123',   role: 'admin1', color: '#7c3aed' },
+            { user: 'aichetou', pass: 'aichetou123', role: 'admin2', color: '#6d28d9' },
           ].map((c, i) => (
             <div key={i}
               onClick={() => { setUsername(c.user); setPassword(c.pass); }}
@@ -127,15 +138,18 @@ export default function Login({ onLogin }) {
                 display: 'flex', justifyContent: 'space-between',
                 alignItems: 'center', padding: '6px 10px',
                 borderRadius: 6, marginBottom: 4,
-                cursor: 'pointer', background: '#1e293b',
-                border: '1px solid #334155'
-              }}>
-              <span style={{ fontSize: 12, color: '#f1f5f9' }}>
+                cursor: 'pointer', background: '#ede9fe',
+                border: '1px solid #ddd6fe'
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = '#ddd6fe'}
+              onMouseLeave={e => e.currentTarget.style.background = '#ede9fe'}>
+              <span style={{ fontSize: 12, color: '#1e293b', fontWeight: '500' }}>
                 {c.user} / {c.pass}
               </span>
               <span style={{
                 fontSize: 10, background: c.color,
-                color: '#fff', borderRadius: 20, padding: '2px 8px'
+                color: '#fff', borderRadius: 20, padding: '2px 8px',
+                fontWeight: 'bold'
               }}>
                 {c.role}
               </span>

@@ -2,21 +2,18 @@ import { useState } from 'react';
 
 export default function AgentList({ agents, selected, onSelect }) {
   const [search,  setSearch]  = useState('');
-  const [filter,  setFilter]  = useState('tous'); // tous | online | offline
-  const [sortBy,  setSortBy]  = useState('nom');  // nom | activite
+  const [filter,  setFilter]  = useState('tous');
+  const [sortBy,  setSortBy]  = useState('nom');
 
   const isOnline = (ts) => Date.now() - ts < 15000;
 
-  // 1. Filtrage par statut
   const filtered = agents
     .filter(a => {
       if (filter === 'online')  return  isOnline(a.derniere_activite);
       if (filter === 'offline') return !isOnline(a.derniere_activite);
       return true;
     })
-    // 2. Recherche par nom
     .filter(a => a.id.toLowerCase().includes(search.toLowerCase()))
-    // 3. Tri
     .sort((a, b) => {
       if (sortBy === 'nom')      return a.id.localeCompare(b.id);
       if (sortBy === 'activite') return b.derniere_activite - a.derniere_activite;
@@ -29,14 +26,18 @@ export default function AgentList({ agents, selected, onSelect }) {
   return (
     <div>
       {/* Titre + compteurs */}
-      <h3 style={{ marginBottom: 10 }}>Agents ({agents.length})</h3>
+      <h3 style={{ marginBottom: 10, color: '#1e293b', fontSize: 15 }}>
+        Agents ({agents.length})
+      </h3>
       <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
-        <span style={{ background: '#14532d', color: '#86efac',
-                       borderRadius: 20, padding: '2px 8px', fontSize: 11 }}>
+        <span style={{ background: '#dcfce7', color: '#16a34a',
+                       borderRadius: 20, padding: '2px 8px', fontSize: 11,
+                       fontWeight: 'bold', border: '1px solid #bbf7d0' }}>
           ● {onlineCount} en ligne
         </span>
-        <span style={{ background: '#450a0a', color: '#fca5a5',
-                       borderRadius: 20, padding: '2px 8px', fontSize: 11 }}>
+        <span style={{ background: '#fee2e2', color: '#dc2626',
+                       borderRadius: 20, padding: '2px 8px', fontSize: 11,
+                       fontWeight: 'bold', border: '1px solid #fecaca' }}>
           ● {offlineCount} hors ligne
         </span>
       </div>
@@ -49,9 +50,9 @@ export default function AgentList({ agents, selected, onSelect }) {
         onChange={e => setSearch(e.target.value)}
         style={{
           width: '100%', padding: '8px 10px', borderRadius: 8,
-          border: '1px solid #334155', background: '#0f172a',
-          color: '#f1f5f9', fontSize: 13, marginBottom: 8,
-          boxSizing: 'border-box'
+          border: '1px solid #cbd5e1', background: '#f8fafc',
+          color: '#1e293b', fontSize: 13, marginBottom: 8,
+          boxSizing: 'border-box', outline: 'none'
         }}
       />
 
@@ -61,11 +62,12 @@ export default function AgentList({ agents, selected, onSelect }) {
           <button key={f} onClick={() => setFilter(f)}
             style={{
               flex: 1, padding: '4px 0', borderRadius: 6,
-              border: 'none', cursor: 'pointer', fontSize: 11,
-              background: filter === f ? '#3b82f6' : '#334155',
-              color: '#fff'
+              border: '1px solid #e2e8f0', cursor: 'pointer', fontSize: 11,
+              background: filter === f ? '#2563eb' : '#f1f5f9',
+              color: filter === f ? '#fff' : '#64748b',
+              fontWeight: filter === f ? 'bold' : 'normal'
             }}>
-            {f === 'tous' ? 'Tous' : f === 'online' ? ' En ligne' : ' Hors ligne'}
+            {f === 'tous' ? 'Tous' : f === 'online' ? '🟢 En ligne' : '🔴 Hors ligne'}
           </button>
         ))}
       </div>
@@ -76,14 +78,15 @@ export default function AgentList({ agents, selected, onSelect }) {
         onChange={e => setSortBy(e.target.value)}
         style={{
           width: '100%', padding: '6px 10px', borderRadius: 8,
-          border: '1px solid #334155', background: '#0f172a',
-          color: '#f1f5f9', fontSize: 12, marginBottom: 12
+          border: '1px solid #cbd5e1', background: '#f8fafc',
+          color: '#1e293b', fontSize: 12, marginBottom: 12,
+          outline: 'none'
         }}>
         <option value="nom">Trier par nom</option>
         <option value="activite">Trier par activite recente</option>
       </select>
 
-      {/* Liste des agents filtrés */}
+      {/* Liste agents */}
       {filtered.length === 0 ? (
         <p style={{ color: '#94a3b8', fontSize: 13, textAlign: 'center' }}>
           Aucun agent trouve
@@ -95,14 +98,19 @@ export default function AgentList({ agents, selected, onSelect }) {
             style={{
               padding: '10px 15px', marginBottom: 8,
               borderRadius: 8, cursor: 'pointer',
-              background: selected === agent.id ? '#1d4ed8' : '#0f172a',
-              color: '#fff', display: 'flex',
+              background: selected === agent.id ? '#eff6ff' : '#f8fafc',
+              color: '#1e293b', display: 'flex',
               justifyContent: 'space-between', alignItems: 'center',
               border: selected === agent.id
-                ? '2px solid #60a5fa' : '2px solid #334155'
+                ? '2px solid #2563eb' : '2px solid #e2e8f0',
+              boxShadow: selected === agent.id
+                ? '0 2px 8px rgba(37,99,235,0.15)' : 'none'
             }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 'bold' }}>{agent.id}</div>
+              <div style={{ fontSize: 13, fontWeight: 'bold',
+                            color: selected === agent.id ? '#2563eb' : '#1e293b' }}>
+                {agent.id}
+              </div>
               <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 2 }}>
                 {new Date(agent.derniere_activite).toLocaleTimeString()}
               </div>
